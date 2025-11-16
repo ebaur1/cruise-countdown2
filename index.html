@@ -93,7 +93,7 @@
     z-index: 0;
   }
 
-  /* Stars (fade in/out) */
+  /* Stars */
   .stars {
     position: absolute;
     top: 0;
@@ -187,11 +187,11 @@
     100% { transform: translateX(30%); }
   }
 
-  /* --- SHIP FIXED (moves left → right and faces right) --- */
+  /* SHIP – starts on the right, moves right → left, emoji NOT flipped */
   .ship {
     position: absolute;
     bottom: 95px;
-    left: -30%;     /* Starts off left side of screen */
+    right: -30%;     /* Start off the right side of the screen */
     z-index: 6;
     display: flex;
     flex-direction: column;
@@ -201,7 +201,7 @@
 
   .ship-emoji {
     font-size: 6rem;
-    transform: scaleX(1);   /* NOT flipped */
+    /* No transform here – use the emoji as-is */
     text-shadow: 0 10px 25px rgba(0,0,0,0.8);
   }
 
@@ -216,9 +216,9 @@
 
   @keyframes sailAcross {
     0%   { transform: translateX(0) translateY(0); }
-    30%  { transform: translateX(50vw) translateY(-4px); }
-    60%  { transform: translateX(100vw) translateY(2px); }
-    100% { transform: translateX(160vw) translateY(0); }
+    30%  { transform: translateX(-50vw) translateY(-4px); }
+    60%  { transform: translateX(-100vw) translateY(2px); }
+    100% { transform: translateX(-160vw) translateY(0); }
   }
 
   /* Palm trees */
@@ -244,135 +244,8 @@
   .names {
     font-size: 1.9rem;
     letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent-gold);
-    margin-bottom: 12px;
-    text-shadow: 0 4px 12px rgba(0,0,0,0.85);
-  }
+    text-transform: uppercase
 
-  h1 {
-    font-size: 2.6rem;
-    margin-bottom: 10px;
-    text-shadow: 0 4px 16px rgba(0,0,0,0.9);
-  }
-
-  .subtitle {
-    font-size: 1.15rem;
-    margin-bottom: 26px;
-    color: var(--text-soft);
-    text-shadow: 0 3px 12px rgba(0,0,0,0.85);
-  }
-
-  /* Countdown */
-  #countdown { margin-top: 10px; }
-
-  .box {
-    display: inline-block;
-    margin: 10px;
-    padding: 18px 12px;
-    min-width: 110px;
-    border-radius: 18px;
-    background: rgba(0, 0, 0, 0.45);
-    border: 1px solid rgba(255,255,255,0.25);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.55);
-  }
-
-  .number {
-    font-size: 2.2rem;
-    font-weight: 700;
-  }
-
-  .label {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--text-soft);
-    opacity: 0.9;
-    margin-top: 5px;
-  }
-
-  .date-note {
-    margin-top: 16px;
-    opacity: 0.95;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.85);
-  }
-
-  /* Responsive */
-  @media (max-width: 700px) {
-    .names { font-size: 1.4rem; }
-    h1 { font-size: 2.1rem; }
-    .subtitle { font-size: 1rem; }
-    .box { min-width: 90px; padding: 14px 8px; margin: 6px; }
-    .number { font-size: 1.8rem; }
-    .ship-emoji { font-size: 4.4rem; }
-    .ship { bottom: 82px; }
-  }
-</style>
-</head>
-<body>
-<div class="wrapper">
-  <div class="glow"></div>
-  <div class="sun"></div>
-  <div class="stars"></div>
-
-  <div class="content">
-    <div class="names">Davis &amp; Bauriedl Cruise</div>
-    <h1>Countdown to Our Cruise</h1>
-    <div class="subtitle">Ship: <strong>Celebrity Beyond</strong></div>
-
-    <div id="countdown">
-      <div class="box"><div class="number" id="days"></div><div class="label">Days</div></div>
-      <div class="box"><div class="number" id="hours"></div><div class="label">Hours</div></div>
-      <div class="box"><div class="number" id="minutes"></div><div class="label">Minutes</div></div>
-      <div class="box"><div class="number" id="seconds"></div><div class="label">Seconds</div></div>
-    </div>
-
-    <div class="date-note">
-      Cruise date: <strong>March 8, 2026</strong>
-    </div>
-  </div>
-
-  <div class="ocean">
-    <div class="horizon-glow"></div>
-    <div class="wave wave1"></div>
-    <div class="wave wave2"></div>
-    <div class="wave wave3"></div>
-  </div>
-
-  <div class="ship">
-    <div class="ship-emoji">🛳️</div>
-    <div class="ship-name">Celebrity Beyond</div>
-  </div>
-
-  <div class="palm left">🌴</div>
-  <div class="palm right">🌴</div>
-</div>
-
-<script>
-  const cruiseDate = new Date("March 8, 2026 00:00:00").getTime();
-
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const d = cruiseDate - now;
-
-    if (d <= 0) {
-      document.getElementById("countdown").innerHTML =
-        '<div class="bonvoyage">Bon Voyage! 🚢✨</div>';
-      return;
-    }
-
-    document.getElementById("days").textContent = Math.floor(d / (1000*60*60*24));
-    document.getElementById("hours").textContent = String(Math.floor((d%(1000*60*60*24))/(1000*60*60))).padStart(2,"0");
-    document.getElementById("minutes").textContent = String(Math.floor((d%(1000*60*60))/(1000*60))).padStart(2,"0");
-    document.getElementById("seconds").textContent = String(Math.floor((d%(1000*60))/1000)).padStart(2,"0");
-  }
-
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
-</script>
-</body>
-</html>
 
 
 
