@@ -15,6 +15,7 @@
     --accent-gold: #ffd166;
     --text-main: #ffffff;
     --text-soft: #f8f9fa;
+    --title-dark: #102a43; /* darker title color */
   }
 
   * {
@@ -201,7 +202,7 @@
 
   .ship-emoji {
     font-size: 6rem;
-    /* No transform here – use the emoji as-is */
+    /* No transform – use emoji as-is */
     text-shadow: 0 10px 25px rgba(0,0,0,0.8);
   }
 
@@ -224,7 +225,6 @@
   /* Palm trees */
   .palm {
     position: absolute;
-    bottom: 100px;
     font-size: 3rem;
     text-shadow: 0 6px 15px rgba(0,0,0,0.9);
     animation: sway 4s ease-in-out infinite;
@@ -232,19 +232,238 @@
     z-index: 7;
   }
 
-  .palm.left { left: 18px; }
-  .palm.right { right: 18px; animation-delay: 1s; }
+  .palm.left {
+    bottom: 100px;
+    left: 18px;
+  }
+
+  .palm.right {
+    bottom: 100px;
+    right: 18px;
+    animation-delay: 1s;
+  }
+
+  /* Extra palm tree variations */
+  .palm.mid {
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.6rem;
+    animation-duration: 5.2s;
+    opacity: 0.95;
+  }
+
+  .palm.far-left {
+    bottom: 120px;
+    left: 8%;
+    font-size: 2.4rem;
+    animation-duration: 5.8s;
+    opacity: 0.9;
+  }
+
+  .palm.far-right {
+    bottom: 125px;
+    right: 8%;
+    font-size: 2.5rem;
+    animation-duration: 5.5s;
+    opacity: 0.9;
+  }
 
   @keyframes sway {
     0%,100% { transform: rotate(0deg); }
     50%     { transform: rotate(4deg); }
   }
 
+  /* Islands */
+  .island {
+    position: absolute;
+    bottom: 70px;
+    font-size: 2.4rem;
+    text-shadow: 0 6px 15px rgba(0,0,0,0.7);
+    z-index: 5; /* behind palms, in front of water */
+    animation: islandBob 6s ease-in-out infinite;
+  }
+
+  .island-left {
+    left: 15%;
+    animation-duration: 7s;
+  }
+
+  .island-right {
+    right: 18%;
+    animation-duration: 8s;
+  }
+
+  @keyframes islandBob {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(4px); }
+  }
+
   /* Text styling */
   .names {
+    display: inline-block;
     font-size: 1.9rem;
     letter-spacing: 0.14em;
-    text-transform: uppercase
+    text-transform: uppercase;
+    color: var(--title-dark); /* darker color */
+    margin-bottom: 12px;
+    padding: 6px 18px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.4);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  }
+
+  h1 {
+    font-size: 2.6rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.9);
+  }
+
+  .subtitle {
+    font-size: 1.15rem;
+    margin-bottom: 26px;
+    color: var(--text-soft);
+    text-shadow: 0 3px 12px rgba(0,0,0,0.85);
+  }
+
+  /* Countdown */
+  #countdown { margin-top: 10px; }
+
+  .box {
+    display: inline-block;
+    margin: 10px;
+    padding: 18px 12px;
+    min-width: 110px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+  }
+
+  .number {
+    font-size: 2.2rem;
+    font-weight: 700;
+  }
+
+  .label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--text-soft);
+    opacity: 0.9;
+    margin-top: 5px;
+  }
+
+  .date-note {
+    margin-top: 16px;
+    opacity: 0.95;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.85);
+  }
+
+  .bonvoyage {
+    font-size: 2rem;
+    margin-top: 24px;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .names {
+      font-size: 1.4rem;
+      letter-spacing: 0.09em;
+      padding: 5px 14px;
+    }
+    h1 { font-size: 2.1rem; }
+    .subtitle { font-size: 1rem; }
+    .box { min-width: 90px; padding: 14px 8px; margin: 6px; }
+    .number { font-size: 1.8rem; }
+    .ship-emoji { font-size: 4.4rem; }
+    .ship { bottom: 82px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="glow"></div>
+  <div class="sun"></div>
+  <div class="stars"></div>
+
+  <div class="content">
+    <div class="names">Davis &amp; Bauriedl Cruise</div>
+    <h1>Countdown to Our Cruise</h1>
+    <div class="subtitle">Ship: <strong>Celebrity Beyond</strong></div>
+
+    <div id="countdown">
+      <div class="box"><div class="number" id="days"></div><div class="label">Days</div></div>
+      <div class="box"><div class="number" id="hours"></div><div class="label">Hours</div></div>
+      <div class="box"><div class="number" id="minutes"></div><div class="label">Minutes</div></div>
+      <div class="box"><div class="number" id="seconds"></div><div class="label">Seconds</div></div>
+    </div>
+
+    <div class="date-note">
+      Cruise date: <strong>March 8, 2026</strong>
+    </div>
+  </div>
+
+  <div class="ocean">
+    <div class="horizon-glow"></div>
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+
+    <!-- Islands inside ocean -->
+    <div class="island island-left">🏝️</div>
+    <div class="island island-right">🏝️</div>
+  </div>
+
+  <!-- Ship -->
+  <div class="ship">
+    <div class="ship-emoji">🛳️</div>
+    <div class="ship-name">Celebrity Beyond</div>
+  </div>
+
+  <!-- Palms near foreground -->
+  <div class="palm left">🌴</div>
+  <div class="palm right">🌴</div>
+
+  <!-- Extra palms for more animation -->
+  <div class="palm mid">🌴</div>
+  <div class="palm far-left">🌴</div>
+  <div class="palm far-right">🌴</div>
+</div>
+
+<script>
+  const cruiseDate = new Date("March 8, 2026 00:00:00").getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const d = cruiseDate - now;
+
+    if (d <= 0) {
+      document.getElementById("countdown").innerHTML =
+        '<div class="bonvoyage">Bon Voyage! 🚢✨</div>';
+      return;
+    }
+
+    const days = Math.floor(d / (1000*60*60*24));
+    const hours = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+    const minutes = Math.floor((d%(1000*60*60))/(1000*60));
+    const seconds = Math.floor((d%(1000*60))/1000);
+
+    document.getElementById("days").textContent    = days;
+    document.getElementById("hours").textContent   = String(hours).padStart(2,"0");
+    document.getElementById("minutes").textContent = String(minutes).padStart(2,"0");
+    document.getElementById("seconds").textContent = String(seconds).padStart(2,"0");
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>
+</body>
+</html>
+
 
 
 
